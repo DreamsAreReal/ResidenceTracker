@@ -1,7 +1,11 @@
 version: '3.1'
 
+networks:
+  residence-tracker-network:
+    external: false
+
 services:
-  postgres:
+  residence-tracker-database:
     image: postgres:latest
     environment:
       POSTGRES_USER: admin
@@ -11,3 +15,18 @@ services:
       - "5432:5432"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - residence-tracker-network
+
+  residence-tracker-app:
+    build:
+      context: ./src/ResidenceTracker.Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8001:80"
+    depends_on:
+      - residence-tracker-database
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=residence-tracker-database;Port=5432;Database=ResidenceTrackerDb;User Id=admin;Password=admin;"
+    networks:
+      - residence-tracker-network
