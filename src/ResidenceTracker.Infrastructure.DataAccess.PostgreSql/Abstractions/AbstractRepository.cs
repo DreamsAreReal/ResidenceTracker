@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ResidenceTracker.Domain.Abstractions;
 using ResidenceTracker.Domain.Pagination;
-using ResidenceTracker.Infastructure.DataAccess.PostgreSql;
 using ResidenceTracker.Infrastructure.Abstractions;
 
 namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Abstractions;

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Logging;
 using ResidenceTracker.Domain.Entities;
-using ResidenceTracker.Infastructure.DataAccess.PostgreSql;
 
 namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Implementation;
 

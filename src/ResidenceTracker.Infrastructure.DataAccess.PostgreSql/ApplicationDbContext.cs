@@ -2,7 +2,7 @@
 using ResidenceTracker.Domain.Abstractions;
 using ResidenceTracker.Domain.Entities;
 
-namespace ResidenceTracker.Infastructure.DataAccess.PostgreSql;
+namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql;
 
 public class ApplicationDbContext : DbContext
 {
@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Flat> Flats { get; set; } = null!;
 
     public DbSet<House> Houses { get; set; } = null!;
-    public DbSet<Member> Humans { get; set; } = null!;
+    public DbSet<Member> Members { get; set; } = null!;
     public DbSet<ResidencyEventLog> ResidencyEventLogs { get; set; } = null!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
