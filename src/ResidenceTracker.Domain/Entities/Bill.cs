@@ -1,10 +1,20 @@
 using ResidenceTracker.Domain.Abstractions;
+using ResidenceTracker.Domain.Attributes;
 
 namespace ResidenceTracker.Domain.Entities;
 
 public class Bill : AbstractEntity
 {
-    public required Flat Flat { get; set; }
-    public required decimal AmountInRubles { get; set; }
-    public required DateTime PaidIn { get; set; }
+    [HumanizedName("Сумма руб.")]
+    public decimal AmountInRubles { get; set; }
+
+    [HumanizedName("Квартира")]
+    public Flat Flat { get; set; }
+    [HumanizedName("Оплачено в (UTC)")]
+    public DateTime? PaidIn { get; set; }
+
+    // ReSharper disable once EmptyConstructor
+    public Bill()
+    {
+    }
 }

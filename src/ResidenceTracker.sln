@@ -2,6 +2,14 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidenceTracker.Domain", "ResidenceTracker.Domain\ResidenceTracker.Domain.csproj", "{C9CD979D-3C46-46CC-ABE8-F1D2D4013653}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidenceTracker.Infrastructure.Abstractions", "ResidenceTracker.Infrastructure.Abstractions\ResidenceTracker.Infrastructure.Abstractions.csproj", "{B462B608-EFE1-455E-87D0-FBD9B21BCC3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidenceTracker.Infrastructure.DataAccess.PostgreSql", "ResidenceTracker.Infrastructure.DataAccess.PostgreSql\ResidenceTracker.Infrastructure.DataAccess.PostgreSql.csproj", "{40D7341B-4FF8-4A0A-B8CC-75AD45D4D0BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidenceTracker.Frontend", "ResidenceTracker.Frontend\ResidenceTracker.Frontend.csproj", "{DE95FF59-294E-4B79-BBFE-3B0689115BEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResidenceTracker.UseCases", "ResidenceTracker.UseCases\ResidenceTracker.UseCases.csproj", "{3A53EDCC-FC16-4062-A791-71649319A6F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +20,21 @@ Global
 		{C9CD979D-3C46-46CC-ABE8-F1D2D4013653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9CD979D-3C46-46CC-ABE8-F1D2D4013653}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9CD979D-3C46-46CC-ABE8-F1D2D4013653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B462B608-EFE1-455E-87D0-FBD9B21BCC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B462B608-EFE1-455E-87D0-FBD9B21BCC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B462B608-EFE1-455E-87D0-FBD9B21BCC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B462B608-EFE1-455E-87D0-FBD9B21BCC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40D7341B-4FF8-4A0A-B8CC-75AD45D4D0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40D7341B-4FF8-4A0A-B8CC-75AD45D4D0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40D7341B-4FF8-4A0A-B8CC-75AD45D4D0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40D7341B-4FF8-4A0A-B8CC-75AD45D4D0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE95FF59-294E-4B79-BBFE-3B0689115BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE95FF59-294E-4B79-BBFE-3B0689115BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE95FF59-294E-4B79-BBFE-3B0689115BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE95FF59-294E-4B79-BBFE-3B0689115BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A53EDCC-FC16-4062-A791-71649319A6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A53EDCC-FC16-4062-A791-71649319A6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A53EDCC-FC16-4062-A791-71649319A6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A53EDCC-FC16-4062-A791-71649319A6F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

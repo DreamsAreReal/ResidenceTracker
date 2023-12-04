@@ -1,0 +1,58 @@
+@page "/bills"
+@using ResidenceTracker.UseCases.Utilities
+@inherits AbstractCrudBasePage<Bill>
+<Table CancellationToken="CancellationToken"
+       DisplayOrder="@DisplayOrder"
+       IsLoading="IsLoading"
+       MaxItemsPerPage="20"
+       OnAddNewItem="HandleAddNewItem"
+       OnChangeItem="HandleChangeItem"
+       OnChangeLoadingState="HandleLoadingChange"
+       @ref="            Table"
+       Repository="Repository"
+       Snackbar="Snackbar"
+       TableTitle="Коммунальные счета"
+       TModel="Bill"/>
+<MudButton Class="mt-5"
+           Color="Color.Primary"
+           Disabled="IsLoading"
+           OnClick="@(async () => {await BillsPaid();})"
+           StartIcon="@Icons.Material.Filled.Paid"
+           Variant="Variant.Outlined">
+    Квитанция оплачена
+</MudButton>
+@if (!IsFormHidden)
+{
+    <MudPaper Class="mt-10 pa-4"
+              disabled="@IsLoading">
+        <MudForm Model="@ChangeableItem"
+                 @ref="                Form"
+                 Validation="@(Validator.ValidateValue)"
+                 ValidationDelay="0">
+            <MudCardContent>
+                <MudAutocomplete AdornmentColor="Color.Primary"
+                                 AdornmentIcon="@Icons.Material.Filled.Search"
+                                 @bind-Value="                        ChangeableItem.Flat"
+                                 For="@(() => ChangeableItem.Flat)"
+                                 Immediate="true"
+                                 Label="@typeof(Bill).GetProperty(nameof(ChangeableItem.Flat))!.GetLocalizedDisplayName()"
+                                 Required="true"
+                                 ResetValueOnEmptyText="true"
+                                 SearchFunc="async x => await FlatRepository.SearchForAutocomplete(x, CancellationToken)"
+                                 ToStringFunc="flat => flat?.Number.ToString()!"/>
+                <MudTextField @bind-Value="                        ChangeableItem.AmountInRubles"
+                              For="@(() => ChangeableItem.AmountInRubles)"
+                              Immediate="true"
+                              Label="@typeof(Bill).GetProperty(nameof(ChangeableItem.AmountInRubles))!.GetLocalizedDisplayName()"/>
+                <MudButton Class="mt-5"
+                           Color="Color.Primary"
+                           Disabled="IsLoading"
+                           OnClick="@(async () => {await Submit();})"
+                           StartIcon="@Icons.Material.Filled.Save"
+                           Variant="Variant.Filled">
+                    Применить
+                </MudButton>
+            </MudCardContent>
+        </MudForm>
+    </MudPaper>
+}

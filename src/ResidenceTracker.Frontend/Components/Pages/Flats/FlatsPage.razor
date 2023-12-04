@@ -1,0 +1,91 @@
+@page "/flats"
+@using ResidenceTracker.UseCases.Utilities
+@inherits AbstractCrudBasePage<Flat>
+<Table CancellationToken="CancellationToken"
+       DisplayOrder="@DisplayOrder"
+       IsLoading="IsLoading"
+       MaxItemsPerPage="20"
+       OnAddNewItem="HandleAddNewItem"
+       OnChangeItem="HandleChangeItem"
+       OnChangeLoadingState="HandleLoadingChange"
+       @ref="            Table"
+       Repository="Repository"
+       Snackbar="Snackbar"
+       TableTitle="Квартиры"
+       TModel="Flat"/>
+<div class="align-center d-flex flex-row">
+    <MudButton Class="mt-5"
+               Color="Color.Primary"
+               Disabled="IsLoading"
+               OnClick="@(ShowAddMemberForm)"
+               Size="Size.Small"
+               StartIcon="@Icons.Material.Filled.Add"
+               Variant="Variant.Outlined">
+        Заселить человека
+    </MudButton>
+    <MudButton Class="ml-5 mt-5"
+               Color="Color.Secondary"
+               Disabled="IsLoading"
+               OnClick="@(ShowRemoveMemberForm)"
+               Size="Size.Small"
+               StartIcon="@Icons.Material.Filled.Remove"
+               Variant="Variant.Outlined">
+        Выселить человека
+    </MudButton>
+</div>
+@if (!IsFormHidden)
+{
+    <MudPaper Class="mt-10 pa-4"
+              disabled="@IsLoading">
+        <MudForm Model="@ChangeableItem"
+                 @ref="                Form"
+                 Validation="@(Validator.ValidateValue)"
+                 ValidationDelay="0">
+            <MudCardContent>
+                <MudTextField @bind-Value="                        ChangeableItem.Number"
+                              For="@(() => ChangeableItem.Number)"
+                              Immediate="true"
+                              Label="@typeof(Flat).GetProperty(nameof(ChangeableItem.Number))!.GetLocalizedDisplayName()"/>
+                <MudButton Class="mt-5"
+                           Color="Color.Primary"
+                           Disabled="IsLoading"
+                           OnClick="@(async () => {await Submit();})"
+                           StartIcon="@Icons.Material.Filled.Save"
+                           Variant="Variant.Filled">
+                    Применить
+                </MudButton>
+            </MudCardContent>
+        </MudForm>
+    </MudPaper>
+}
+
+@if (!_isMemberFormHidden)
+{
+    <MudPaper Class="mt-10 pa-4"
+              disabled="@IsLoading">
+        <MudForm Model="@_flat"
+                 @ref="                _memberForm"
+                 ValidationDelay="0">
+            <MudCardContent>
+                <MudAutocomplete AdornmentColor="Color.Primary"
+                                 AdornmentIcon="@Icons.Material.Filled.Search"
+                                 @bind-Value="                        _member"
+                                 For="@(() => _member)"
+                                 Immediate="true"
+                                 Label="@typeof(Flat).GetProperty(nameof(ChangeableItem.Members))!.GetLocalizedDisplayName()"
+                                 Required="true"
+                                 ResetValueOnEmptyText="true"
+                                 SearchFunc="async x => await MembersRepository.SearchForAutocomplete(x, CancellationToken)"
+                                 ToStringFunc="flat => flat?.Name!"/>
+                <MudButton Class="mt-5"
+                           Color="Color.Primary"
+                           Disabled="IsLoading"
+                           OnClick="@(async () => {await SubmitMemberForm();})"
+                           StartIcon="@Icons.Material.Filled.Save"
+                           Variant="Variant.Filled">
+                    Применить
+                </MudButton>
+            </MudCardContent>
+        </MudForm>
+    </MudPaper>
+}

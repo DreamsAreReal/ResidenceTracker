@@ -1,0 +1,101 @@
+@inherits ComponentBase
+@typeparam TModel where TModel : AbstractEntity
+<MudTable @bind-SelectedItems="            SelectedItems"
+          Bordered="false"
+          Dense="false"
+          Hover="true"
+          Items="@_pagedData.Data"
+          Loading="@IsLoading"
+          MultiSelection="true"
+          ReadOnly="true"
+          RowsPerPage="MaxItemsPerPage"
+          SelectOnRowClick="true"
+          Striped="false">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@TableTitle</MudText>
+        <MudSpacer/>
+        <MudTextField Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      Class="mt-0"
+                      Disabled="IsLoading"
+                      IconSize="Size.Medium"
+                      Placeholder="Search"
+                      ValueChanged="@(async (string searchText) => {await ChangeSearchText(searchText);})">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        @foreach (string propertyName in DisplayOrder)
+        {
+            <MudTh>@GetDisplayName(propertyName)</MudTh>
+        }
+    </HeaderContent>
+    <RowTemplate>
+        @foreach (string propertyName in DisplayOrder)
+        {
+            @if (GetPropertyValue(context, propertyName) is IEnumerable<object?>)
+            {
+                <MudTd DataLabel="@propertyName">
+                    <MudPaper Width="100%">
+                        <MudContainer MaxWidth="MaxWidth.Large">
+                            @foreach (object? item in (GetPropertyValue(context, propertyName) as IEnumerable<object?>)!)
+                            {
+                                <div style="word-wrap: break-word;">
+                                    <MudText Typo="Typo.body1">@item</MudText>
+                                    <MudDivider Light="true"/>
+                                </div>
+                            }
+                        </MudContainer>
+                    </MudPaper>
+                </MudTd>
+            }
+            else
+            {
+                <MudTd DataLabel="@propertyName">@GetPropertyValue(context, propertyName)</MudTd>
+            }
+        }
+    </RowTemplate>
+    <PagerContent>
+        <div class="align-center d-flex flex-column">
+            <MudPagination BoundaryCount="2"
+                           Color="Color.Primary"
+                           Count="_pagedData.TotalPages"
+                           Disabled="IsLoading"
+                           MiddleCount="5"
+                           @ref="                _pagination"
+                           SelectedChanged="@(async currentPage => {await UpdateTableData(currentPage);})"/>
+            <MudText Align="Align.Center">Количество элементов: @_pagedData.TotalCount</MudText>
+        </div>
+    </PagerContent>
+</MudTable>
+@if (ShowButtons)
+{
+    <div class="align-center d-flex flex-row">
+        <MudButton Class="mt-5"
+                   Color="Color.Primary"
+                   Disabled="IsLoading"
+                   OnClick="@(() => AddNewItem())"
+                   Size="Size.Medium"
+                   StartIcon="@Icons.Material.Filled.Save"
+                   Variant="Variant.Filled">
+            Добавить
+        </MudButton>
+        <MudButton Class="ml-5 mt-5"
+                   Color="Color.Warning"
+                   Disabled="IsLoading"
+                   OnClick="@(() => ChangeItem())"
+                   Size="Size.Medium"
+                   StartIcon="@Icons.Material.Filled.Edit"
+                   Variant="Variant.Filled">
+            Изменить элемент
+        </MudButton>
+        <MudButton Class="ml-5 mt-5"
+                   Color="Color.Secondary"
+                   Disabled="IsLoading"
+                   OnClick="@(async () => {await DeleteItems();})"
+                   Size="Size.Medium"
+                   StartIcon="@Icons.Material.Filled.Delete"
+                   Variant="Variant.Filled">
+            Удалить один или несколько элементов
+        </MudButton>
+    </div>
+}

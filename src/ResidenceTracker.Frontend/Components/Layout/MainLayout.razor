@@ -1,0 +1,35 @@
+﻿@using MudBlazor
+@inherits LayoutComponentBase
+<HeadContent>
+    <title>ResidenceTracker</title>
+</HeadContent>
+
+<PageTitle>ResidenceTracker</PageTitle>
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       Icon="@Icons.Material.Filled.Menu"
+                       OnClick="@(e => DrawerToggle())"/>
+        <MudText Class="ml-3"
+                 Typo="Typo.h5">
+            ResidenceTracker
+        </MudText>
+        <MudSpacer/>
+    </MudAppBar>
+    <MudDrawer @bind-Open="                _drawerOpen"
+               ClipMode="DrawerClipMode.Always"
+               Elevation="2">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer Class="mt-5"
+                      MaxWidth="MaxWidth.ExtraExtraLarge">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
