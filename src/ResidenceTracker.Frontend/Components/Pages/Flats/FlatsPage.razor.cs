@@ -111,6 +111,12 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
 
             if (_isAdd && !existsFlat)
             {
+                if (_member.FlatId is not null)
+                {
+                    Snackbar.Add($"Человек с именем {_member.Name} уже есть в другой квартире", Severity.Error);
+                    return;
+                }
+                
                 if (_flat.Members is not null)
                 {
                     _flat.Members.Add(_member);

@@ -1,3 +1,27 @@
 ﻿@page "/"
-
-
+<MudContainer>
+    <MudGrid Justify="Justify.Center"
+             Spacing="5">
+        @foreach (DashboardDataItem item in Data)
+        {
+            <MudItem lg="3"
+                     md="4"
+                     sm="6"
+                     xs="12">
+                <MudCard Class="mb-4"
+                         Color="Color.Success">
+                    <MudCardHeader>
+                        <MudIcon Class="mr-2"
+                                 Icon="@Icons.Material.Filled.Home">
+                        </MudIcon>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.h6">Номер дома @item.HouseNumber</MudText>
+                        <MudText Typo="Typo.subtitle1">Количество квартир: @item.FlatsCount</MudText>
+                        <MudText Typo="Typo.subtitle2">Всего оплачено коммунальных услуг: @item.TotalPaidAmount руб.</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+</MudContainer>

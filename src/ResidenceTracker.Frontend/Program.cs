@@ -23,6 +23,7 @@ builder.Services.AddTransient<IRepository<House>, HouseRepository>();
 builder.Services.AddTransient<IRepository<Flat>, FlatRepository>();
 builder.Services.AddTransient<IRepository<ResidencyEventLog>, ResidencyEventLogRepository>();
 builder.Services.AddTransient<IRepository<Bill>, BillRepository>();
+builder.Services.AddTransient<DashboardRepository>();
 
 builder.Services.AddTransient<AbstractFormValidator<Member>, MemberValidator>();
 builder.Services.AddTransient<AbstractFormValidator<House>, HouseValidator>();

@@ -10,6 +10,7 @@ public class Bill : AbstractEntity
 
     [HumanizedName("Квартира")]
     public Flat Flat { get; set; }
+
     [HumanizedName("Оплачено в (UTC)")]
     public DateTime? PaidIn { get; set; }
 

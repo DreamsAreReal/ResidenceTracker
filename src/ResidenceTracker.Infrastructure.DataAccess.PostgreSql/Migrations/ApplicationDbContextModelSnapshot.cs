@@ -169,7 +169,7 @@ namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Migrations
             modelBuilder.Entity("ResidenceTracker.Domain.Entities.Bill", b =>
                 {
                     b.HasOne("ResidenceTracker.Domain.Entities.Flat", "Flat")
-                        .WithMany()
+                        .WithMany("Bills")
                         .HasForeignKey("FlatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -214,6 +214,8 @@ namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Migrations
 
             modelBuilder.Entity("ResidenceTracker.Domain.Entities.Flat", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("Members");
                 });
 

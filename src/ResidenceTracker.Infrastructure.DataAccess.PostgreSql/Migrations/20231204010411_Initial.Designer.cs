@@ -12,7 +12,7 @@ using ResidenceTracker.Infastructure.DataAccess.PostgreSql;
 namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231204001814_Initial")]
+    [Migration("20231204010411_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -172,7 +172,7 @@ namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Migrations
             modelBuilder.Entity("ResidenceTracker.Domain.Entities.Bill", b =>
                 {
                     b.HasOne("ResidenceTracker.Domain.Entities.Flat", "Flat")
-                        .WithMany()
+                        .WithMany("Bills")
                         .HasForeignKey("FlatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -217,6 +217,8 @@ namespace ResidenceTracker.Infrastructure.DataAccess.PostgreSql.Migrations
 
             modelBuilder.Entity("ResidenceTracker.Domain.Entities.Flat", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("Members");
                 });
 

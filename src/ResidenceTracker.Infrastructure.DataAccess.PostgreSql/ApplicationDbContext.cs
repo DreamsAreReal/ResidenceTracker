@@ -34,8 +34,8 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<House>().HasMany(x => x.Flats).WithOne().OnDelete(DeleteBehavior.Restrict);
-        builder.Entity<Flat>().HasMany(x => x.Members).WithOne().OnDelete(DeleteBehavior.Restrict);
-        builder.Entity<Bill>().HasOne(b => b.Flat).WithMany().OnDelete(DeleteBehavior.Restrict);
+        builder.Entity<Flat>().HasMany(x => x.Members).WithOne().OnDelete(DeleteBehavior.Restrict).HasForeignKey(x=>x.FlatId);
+        builder.Entity<Bill>().HasOne(b => b.Flat).WithMany(x=>x.Bills).OnDelete(DeleteBehavior.Restrict);
 
         builder.Entity<ResidencyEventLog>()
                .HasOne<Flat>(x => x.Flat)

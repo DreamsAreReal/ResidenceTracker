@@ -10,6 +10,8 @@ public class Flat : AbstractEntity
 
     [HumanizedName("Номер")]
     public int Number { get; set; }
+    
+    public ICollection<Bill>? Bills { get; private set; }
 
     // ReSharper disable once EmptyConstructor
     public Flat()

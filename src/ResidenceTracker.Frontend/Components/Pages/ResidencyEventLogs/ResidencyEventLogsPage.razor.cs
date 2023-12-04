@@ -12,6 +12,7 @@ public partial class ResidencyEventLogsPage : AbstractCrudBasePage<ResidencyEven
         "Id",
         "Flat.Number",
         "Member.Name",
+        "EventType",
         "CreatedAt",
         "ModifiedAt",
     };
