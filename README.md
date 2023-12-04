@@ -301,7 +301,7 @@ var members = await dbContext.Members.ToListAsync();
 ```html
 <Table ... DisplayOrder="new[] { "Name", "Age", "Address" }" ... />
 ```
-### `TableTitle`
+### TableTitle
 Параметр `TableTitle` представляет заголовок таблицы. Он используется для отображения заголовка над таблицей. Пример использования:
 
 ```html
