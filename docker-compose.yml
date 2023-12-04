@@ -20,13 +20,14 @@ services:
 
   residence-tracker-app:
     build:
-      context: ./src/ResidenceTracker.Frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: src/ResidenceTracker.Frontend/Dockerfile
     ports:
-      - "8001:80"
+      - "8002:8002"
     depends_on:
       - residence-tracker-database
     environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
       ConnectionStrings__DefaultConnection: "Host=residence-tracker-database;Port=5432;Database=ResidenceTrackerDb;User Id=admin;Password=admin;"
     networks:
       - residence-tracker-network

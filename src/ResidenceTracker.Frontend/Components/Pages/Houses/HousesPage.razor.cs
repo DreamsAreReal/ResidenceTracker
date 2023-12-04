@@ -85,13 +85,10 @@ public partial class HousesPage : AbstractCrudBasePage<House>
 
         if (_flat is null)
         {
-            _flatForm.IsValid = false;
-            await _flatForm.IsValidChanged.InvokeAsync();
-
-            _flatForm.Errors = new[]
-            {
+            Snackbar.Add(
                 $"{typeof(House).GetProperty(nameof(House.Flats))!.GetLocalizedDisplayName()} не может быть пустым",
-            };
+                Severity.Error
+            );
 
             HandleLoadingChange(false);
             return;
@@ -145,7 +142,8 @@ public partial class HousesPage : AbstractCrudBasePage<House>
             Snackbar.Add("Произошла ошибка", Severity.Error);
 
             Logger.LogError(
-                e, "Error in {@ClassName} during {@MethodName} execution", GetType().Name, nameof(SubmitFlatForm)
+                e, "Error in {@ClassName} during {@MethodName} execution", GetType().Name,
+                nameof(SubmitFlatForm)
             );
         }
         finally

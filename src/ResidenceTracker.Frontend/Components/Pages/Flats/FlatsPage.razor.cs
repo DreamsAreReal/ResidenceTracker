@@ -25,11 +25,11 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
     [Inject]
     protected IRepository<ResidencyEventLog> ResidencyEventLogRepository { get; set; } = null!;
     private Flat? _flat;
+    private bool _isAdd;
+    private bool _isMemberFormHidden = true;
 
     private Member? _member;
     private MudForm _memberForm = null!;
-    private bool _isAdd;
-    private bool _isMemberFormHidden = true;
 
     private void ChangeMemberFormState(bool isHidden)
     {
@@ -88,13 +88,10 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
 
         if (_member is null)
         {
-            _memberForm.IsValid = false;
-            await _memberForm.IsValidChanged.InvokeAsync();
-
-            _memberForm.Errors = new[]
-            {
-                $"{typeof(House).GetProperty(nameof(House.Flats))!.GetLocalizedDisplayName()} не может быть пустым",
-            };
+            Snackbar.Add(
+                $"{typeof(Flat).GetProperty(nameof(Flat.Members))!.GetLocalizedDisplayName()} не может быть пустым",
+                Severity.Error
+            );
 
             HandleLoadingChange(false);
             return;
@@ -107,16 +104,19 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
             if (Repository is not FlatRepository flatRepository)
                 throw new("FlatRepository cast");
 
-            var existsFlat = await flatRepository.HasMember(_flat.Id, _member.Id, CancellationToken);
+            bool existsFlat = await flatRepository.HasMember(_flat.Id, _member.Id, CancellationToken);
 
             if (_isAdd && !existsFlat)
             {
                 if (_member.FlatId is not null)
                 {
-                    Snackbar.Add($"Человек с именем {_member.Name} уже есть в другой квартире", Severity.Error);
+                    Snackbar.Add(
+                        $"Человек с именем {_member.Name} уже есть в другой квартире", Severity.Error
+                    );
+
                     return;
                 }
-                
+
                 if (_flat.Members is not null)
                 {
                     _flat.Members.Add(_member);
@@ -127,14 +127,15 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
                     _flat.Members.Add(_member);
                 }
 
-                await ResidencyEventLogRepository.AddAsync(new ResidencyEventLog()
-                {
-                    Flat = _flat,
-                    Member = _member,
-                    EventType = ResidencyEventType.Enter,
-                    IsReadonly = true
-                    
-                }, CancellationToken);
+                await ResidencyEventLogRepository.AddAsync(
+                    new()
+                    {
+                        Flat = _flat,
+                        Member = _member,
+                        EventType = ResidencyEventType.Enter,
+                        IsReadonly = true,
+                    }, CancellationToken
+                );
             }
             else if (_isAdd && existsFlat)
             {
@@ -144,14 +145,16 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
             else if (!_isAdd && existsFlat)
             {
                 _flat.Members?.Remove(_member);
-                await ResidencyEventLogRepository.AddAsync(new ResidencyEventLog()
-                {
-                    Flat = _flat,
-                    Member = _member,
-                    EventType = ResidencyEventType.Out,
-                    IsReadonly = true
-                    
-                }, CancellationToken);
+
+                await ResidencyEventLogRepository.AddAsync(
+                    new()
+                    {
+                        Flat = _flat,
+                        Member = _member,
+                        EventType = ResidencyEventType.Out,
+                        IsReadonly = true,
+                    }, CancellationToken
+                );
             }
             else if (!_isAdd &&
                      !existsFlat)
@@ -169,7 +172,8 @@ public partial class FlatsPage : AbstractCrudBasePage<Flat>
             Snackbar.Add("Произошла ошибка", Severity.Error);
 
             Logger.LogError(
-                e, "Error in {@ClassName} during {@MethodName} execution", GetType().Name, nameof(SubmitMemberForm)
+                e, "Error in {@ClassName} during {@MethodName} execution", GetType().Name,
+                nameof(SubmitMemberForm)
             );
         }
         finally

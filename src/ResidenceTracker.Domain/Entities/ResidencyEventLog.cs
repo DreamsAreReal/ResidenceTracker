@@ -16,7 +16,9 @@ public class ResidencyEventLog : AbstractEntity
     public Member Member { get; set; }
 
     // ReSharper disable once EmptyConstructor
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public ResidencyEventLog()
+        #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
     }
 }

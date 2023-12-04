@@ -21,6 +21,7 @@ RUN dotnet publish "ResidenceTracker.Frontend.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+ARG ASPNETCORE_ENVIRONMENT
+ENV ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ResidenceTracker.Frontend.dll"]
-
