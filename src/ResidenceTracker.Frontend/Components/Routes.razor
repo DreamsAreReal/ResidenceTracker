@@ -1,7 +1,8 @@
-﻿@rendermode InteractiveServer
+﻿@using ResidenceTracker.Frontend.Components.Layout
+@rendermode InteractiveServer
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView DefaultLayout="@typeof(Layout.MainLayout)"
+        <RouteView DefaultLayout="@typeof(MainLayout)"
                    RouteData="@routeData"/>
         <FocusOnNavigate RouteData="@routeData"
                          Selector="h1"/>

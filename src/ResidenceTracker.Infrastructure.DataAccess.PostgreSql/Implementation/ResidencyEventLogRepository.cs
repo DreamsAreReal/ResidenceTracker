@@ -9,6 +9,13 @@ public class ResidencyEventLogRepository(ApplicationDbContext context,
                                          ILogger<AbstractRepository<ResidencyEventLog>> logger
 ) : AbstractRepository<ResidencyEventLog>(context, logger)
 {
+    protected override IQueryable<ResidencyEventLog> BuildRelationShipQuery(
+        IQueryable<ResidencyEventLog> query
+    )
+    {
+        return query.Include(x => x.Member).Include(x => x.Flat);
+    }
+
     protected override IQueryable<ResidencyEventLog> BuildSearchQuery(
         IQueryable<ResidencyEventLog> query,
         string searchText
@@ -17,11 +24,6 @@ public class ResidencyEventLogRepository(ApplicationDbContext context,
         return query.Include(x => x.Flat)
                     .Include(x => x.Member)
                     .Where(x => x.Flat.Number.ToString().Contains(searchText))
-                    .Where(x=>x.Member.Name.Contains(searchText));
-    }
-
-    protected override IQueryable<ResidencyEventLog> BuildRelationShipQuery(IQueryable<ResidencyEventLog> query)
-    {
-        return query.Include(x => x.Member).Include(x => x.Flat);
+                    .Where(x => x.Member.Name.Contains(searchText));
     }
 }

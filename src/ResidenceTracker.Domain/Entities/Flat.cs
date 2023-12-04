@@ -5,13 +5,12 @@ namespace ResidenceTracker.Domain.Entities;
 
 public class Flat : AbstractEntity
 {
+    public ICollection<Bill>? Bills { get; }
     [HumanizedName("Жильцы")]
     public ICollection<Member>? Members { get; set; } = new List<Member>();
 
     [HumanizedName("Номер")]
     public int Number { get; set; }
-    
-    public ICollection<Bill>? Bills { get; private set; }
 
     // ReSharper disable once EmptyConstructor
     public Flat()
